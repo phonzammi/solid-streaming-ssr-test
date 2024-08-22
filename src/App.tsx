@@ -1,12 +1,9 @@
-import { createResource, Suspense } from 'solid-js'
 import solidLogo from './assets/solid.svg'
 import './App.css'
 import MovieList from './components/MovieList'
 import { Counter } from './components/Counter'
-import { fetchMovies } from './utils/api'
 
 function App() {
-  const [movies] = createResource(fetchMovies)
 
   return (
     <div class="App">
@@ -25,9 +22,7 @@ function App() {
         </p>
         <Counter />
         <h3>Star Wars Movies</h3>
-        <Suspense fallback={<p>Loading ...</p>}>
-          <MovieList movies={movies} />
-        </Suspense>
+        <MovieList />
       </div>
       <p class="read-the-docs">
         Click on the Vite and Solid logos to learn more

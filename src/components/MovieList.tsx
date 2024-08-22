@@ -1,17 +1,20 @@
-import { For, type Resource } from "solid-js";
-import type { Movie } from "../utils/api";
+import { createResource, For, Suspense } from "solid-js";
+import { fetchMovies } from "../utils/api";
 
-export default function MovieList(props: { movies: Resource<Movie[] | undefined> }) {
+export default function MovieList() {
+    const [movies] = createResource(fetchMovies)
 
     return (
-        <ol>
-            <For each={props.movies()}>
-                {(movie) => (
-                    <li>
-                        {movie.title} ({movie.release_date})
-                    </li>
-                )}
-            </For>
-        </ol>
+        <Suspense fallback={<p>Loading ...</p>}>
+            <ol>
+                <For each={movies()}>
+                    {(movie) => (
+                        <li>
+                            {movie.title} ({movie.release_date})
+                        </li>
+                    )}
+                </For>
+            </ol>
+        </Suspense>
     )
 }
