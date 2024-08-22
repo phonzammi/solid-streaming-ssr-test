@@ -1,10 +1,13 @@
-import { Suspense } from 'solid-js'
+import { createResource, Suspense } from 'solid-js'
 import solidLogo from './assets/solid.svg'
 import './App.css'
 import MovieList from './components/MovieList'
 import { Counter } from './components/Counter'
+import { fetchMovies } from './utils/api'
 
 function App() {
+  const [movies] = createResource(fetchMovies)
+
   return (
     <div class="App">
       <div>
@@ -23,7 +26,7 @@ function App() {
         <Counter />
         <h3>Star Wars Movies</h3>
         <Suspense fallback={<p>Loading ...</p>}>
-          <MovieList />
+          <MovieList movies={movies} />
         </Suspense>
       </div>
       <p class="read-the-docs">
